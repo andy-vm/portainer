@@ -13,7 +13,7 @@ jobs:
       - run: yarn --frozen-lockfile
 
       - name: Run tests
-        run: yarn test:client
+        run: make test-client
   # test-server:
   #   runs-on: ubuntu-latest
   #   env:
