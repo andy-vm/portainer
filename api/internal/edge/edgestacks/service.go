@@ -9,6 +9,7 @@ import (
 	"github.com/pkg/errors"
 	portainer "github.com/portainer/portainer/api"
 	"github.com/portainer/portainer/api/dataservices"
+	httperrors "github.com/portainer/portainer/api/http/errors"
 	"github.com/portainer/portainer/api/internal/edge"
 	edgetypes "github.com/portainer/portainer/api/internal/edge/types"
 )
@@ -61,7 +62,7 @@ func validateUniqueName(edgeStacksGetter func() ([]portainer.EdgeStack, error), 
 
 	for _, stack := range edgeStacks {
 		if strings.EqualFold(stack.Name, name) {
-			return errors.New("Edge stack name must be unique")
+			return httperrors.NewConflictError("Edge stack name must be unique")
 		}
 	}
 	return nil
@@ -73,7 +74,6 @@ func (service *Service) PersistEdgeStack(
 	storeManifest edgetypes.StoreManifestFunc) (*portainer.EdgeStack, error) {
 
 	relationConfig, err := edge.FetchEndpointRelationsConfig(service.dataStore)
-
 	if err != nil {
 		return nil, fmt.Errorf("unable to find environment relations in database: %w", err)
 	}

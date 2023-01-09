@@ -12,3 +12,15 @@ var (
 	// ErrNotAvailableInDemo feature is not allowed in demo
 	ErrNotAvailableInDemo = errors.New("This feature is not available in the demo version of Portainer")
 )
+
+type ConflictError struct {
+	msg string
+}
+
+func (e *ConflictError) Error() string {
+	return e.msg
+}
+
+func NewConflictError(msg string) *ConflictError {
+	return &ConflictError{msg: msg}
+}

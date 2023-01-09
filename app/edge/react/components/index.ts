@@ -7,12 +7,19 @@ import { EdgeCheckinIntervalField } from '@/react/edge/components/EdgeCheckInInt
 import { EdgeScriptForm } from '@/react/edge/components/EdgeScriptForm';
 import { EdgeAsyncIntervalsForm } from '@/react/edge/components/EdgeAsyncIntervalsForm';
 import { EdgeStackDeploymentTypeSelector } from '@/react/edge/edge-stacks/components/EdgeStackDeploymentTypeSelector';
+import { EditEdgeStackForm } from '@/react/edge/edge-stacks/ItemView/EditEdgeStackForm/EditEdgeStackForm';
+import { withCurrentUser } from '@/react-tools/withCurrentUser';
+import { withUIRouter } from '@/react-tools/withUIRouter';
 
 export const componentsModule = angular
   .module('portainer.edge.react.components', [])
   .component(
     'edgeGroupsSelector',
-    r2a(EdgeGroupsSelector, ['items', 'onChange', 'value'])
+    r2a(withReactQuery(withUIRouter(EdgeGroupsSelector)), [
+      'onChange',
+      'value',
+      'error',
+    ])
   )
   .component(
     'edgeScriptForm',
@@ -52,6 +59,18 @@ export const componentsModule = angular
       'onChange',
       'hasDockerEndpoint',
       'hasKubeEndpoint',
+      'hasNomadEndpoint',
+      'allowKubeToSelectCompose',
+    ])
+  )
+  .component(
+    'editEdgeStackForm',
+    r2a(withUIRouter(withReactQuery(withCurrentUser(EditEdgeStackForm))), [
+      'edgeStack',
+      'fileContent',
+      'isSubmitting',
+      'onEditorChange',
+      'onSubmit',
       'allowKubeToSelectCompose',
     ])
   ).name;
