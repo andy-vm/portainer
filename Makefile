@@ -101,7 +101,13 @@ docs-build: docs-deps ## Build docs
 	cd api && swag init -g ./http/handler/handler.go --parseDependency --parseInternal --parseDepth 2 --markdownFiles ./
 
 docs-validate: docs-build ## Validate docs
-	swagger2openapi --warnOnly api/docs/swagger.yaml -o api/docs/openapi.yaml && swagger-cli validate api/docs/openapi.yaml
+	yarn swagger2openapi --warnOnly api/docs/swagger.yaml -o api/docs/openapi.yaml
+	yarn swagger-cli validate api/docs/openapi.yaml
+
+docs-clean: ## Clean docs
+	rm -rf api/docs
+
+docs-validate-clean: docs-validate docs-clean ## Validate and clean docs
 
 ##@ Helpers
 
