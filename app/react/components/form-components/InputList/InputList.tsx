@@ -42,7 +42,7 @@ type RenderItemFunction<T> = (
 ) => React.ReactNode;
 
 interface Props<T> {
-  label: string;
+  label?: string;
   value: T[];
   onChange(value: T[], e: OnChangeEvent<T>): void;
   itemBuilder?(): T;
@@ -76,6 +76,7 @@ export function InputList<T = DefaultType>({
   disabled,
   readOnly,
 }: Props<T>) {
+  const isAddButtonVisible = !(isAddButtonHidden || readOnly);
   return (
     <div className={clsx('form-group', styles.root)}>
       <div className={clsx('col-sm-12', styles.header)}>
@@ -158,7 +159,7 @@ export function InputList<T = DefaultType>({
         </div>
       )}
       <div className="col-sm-12 mt-5">
-        {!(isAddButtonHidden || readOnly) && (
+        {isAddButtonVisible && (
           <Button
             onClick={handleAdd}
             disabled={disabled}

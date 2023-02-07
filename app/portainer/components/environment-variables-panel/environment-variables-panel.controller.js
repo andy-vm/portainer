@@ -1,34 +1,46 @@
-import { parseDotEnvFile, convertToArrayOfStrings } from '@/portainer/helpers/env-vars';
+import { object } from 'yup';
+import { envVarValidation } from '@@/form-components/EnvironmentVariablesFieldset/EnvironmentVariablesFieldset';
+import { validateForm } from '@@/form-components/validate-form';
 
 export default class EnvironmentVariablesPanelController {
   /* @ngInject */
-  constructor() {
-    this.mode = 'simple';
-    this.editorText = '';
+  constructor($async, $scope) {
+    this.$async = $async;
+    this.$scope = $scope;
 
-    this.switchEnvMode = this.switchEnvMode.bind(this);
-    this.editorUpdate = this.editorUpdate.bind(this);
-    this.handleSimpleChange = this.handleSimpleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  switchEnvMode() {
-    if (this.mode === 'simple') {
-      const editorText = convertToArrayOfStrings(this.ngModel).join('\n');
+  async runValidation(value) {
+    return this.$async(async () => {
+      this.errors = [];
+      if (this.envVarsForm) {
+        this.envVarsForm.$setValidity('envVarsForm', true, this.envVarsForm);
+      }
 
-      this.editorText = editorText;
+      const { value: errors } = await validateField(value);
+      this.errors = errors;
 
-      this.mode = 'advanced';
-    } else {
-      this.mode = 'simple';
-    }
+      if (Object.keys(this.errors).length > 0) {
+        if (this.envVarsForm) {
+          this.envVarsForm.$setValidity('envVarsForm', false, this.envVarsForm);
+        }
+      }
+    });
   }
 
-  handleSimpleChange(value) {
-    this.onChange(value);
+  handleChange(value) {
+    this.$scope.$evalAsync(async () => {
+      this.onChange(value);
+      await this.runValidation(value);
+    });
   }
 
-  editorUpdate(value) {
-    this.editorText = value;
-    this.onChange(parseDotEnvFile(this.editorText));
+  async $onInit() {
+    await this.runValidation(this.value);
   }
+}
+
+function validateField(value) {
+  return validateForm(() => object({ value: envVarValidation() }), { value });
 }

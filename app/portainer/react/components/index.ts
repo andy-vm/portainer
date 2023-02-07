@@ -5,6 +5,7 @@ import { withCurrentUser } from '@/react-tools/withCurrentUser';
 import { withReactQuery } from '@/react-tools/withReactQuery';
 import { withUIRouter } from '@/react-tools/withUIRouter';
 
+import { EnvironmentVariablesFieldset } from '@@/form-components/EnvironmentVariablesFieldset';
 import { Icon } from '@@/Icon';
 import { ReactQueryDevtoolsWrapper } from '@@/ReactQueryDevtoolsWrapper';
 import { PageHeader } from '@@/PageHeader';
@@ -184,5 +185,15 @@ export const componentsModule = angular
       'onChange',
       'value',
       'height',
+    ])
+  )
+  .component(
+    'reactEnvironmentVariablesPanel',
+    r2a(EnvironmentVariablesFieldset, [
+      'explanation',
+      'onChange',
+      'showHelpMessage',
+      'value',
+      'errors',
     ])
   ).name;
