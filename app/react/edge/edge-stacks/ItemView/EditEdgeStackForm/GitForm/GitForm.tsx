@@ -30,6 +30,7 @@ import { EnvironmentType } from '@/react/portainer/environments/types';
 import { LoadingButton } from '@@/buttons';
 import { FormSection } from '@@/form-components/FormSection';
 import { TextTip } from '@@/Tip/TextTip';
+import { FormError } from '@@/form-components/FormError';
 
 import { useValidateEnvironmentTypes } from '../useEdgeGroupHasType';
 import { atLeastTwo } from '../atLeastTwo';
@@ -195,11 +196,11 @@ function InnerForm({
       )}
 
       {values.deploymentType === DeploymentType.Compose && hasKubeEndpoint && (
-        <TextTip>
+        <FormError>
           Edge groups with kubernetes environments no longer support compose
           deployment types in Portainer. Please select edge groups that only
           have docker environments when using compose deployment types.
-        </TextTip>
+        </FormError>
       )}
       <EdgeStackDeploymentTypeSelector
         value={values.deploymentType}
