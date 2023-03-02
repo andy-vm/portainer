@@ -243,7 +243,7 @@ func TestCreateAndInspect(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	payload := swarmStackFromFileContentPayload{
+	payload := edgeStackCreateTextPayload{
 		Name:             "Test Stack",
 		StackFileContent: "stack content",
 		EdgeGroups:       []portainer.EdgeGroupID{1},
@@ -315,37 +315,37 @@ func TestCreateWithInvalidPayload(t *testing.T) {
 	}{
 		{
 			Name:               "Invalid query string parameter",
-			Payload:            swarmStackFromFileContentPayload{},
+			Payload:            edgeStackCreateTextPayload{},
 			QueryString:        "invalid=query-string",
 			ExpectedStatusCode: 400,
 		},
 		{
 			Name:               "Invalid creation method",
-			Payload:            swarmStackFromFileContentPayload{},
+			Payload:            edgeStackCreateTextPayload{},
 			QueryString:        "method=invalid-creation-method",
 			ExpectedStatusCode: 500,
 		},
 		{
 			Name:               "Empty swarmStackFromFileContentPayload with string method",
-			Payload:            swarmStackFromFileContentPayload{},
+			Payload:            edgeStackCreateTextPayload{},
 			QueryString:        "method=string",
 			ExpectedStatusCode: 400,
 		},
 		{
 			Name:               "Empty swarmStackFromFileContentPayload with repository method",
-			Payload:            swarmStackFromFileContentPayload{},
+			Payload:            edgeStackCreateTextPayload{},
 			QueryString:        "method=repository",
 			ExpectedStatusCode: 400,
 		},
 		{
 			Name:               "Empty swarmStackFromFileContentPayload with file method",
-			Payload:            swarmStackFromFileContentPayload{},
+			Payload:            edgeStackCreateTextPayload{},
 			QueryString:        "method=file",
 			ExpectedStatusCode: 400,
 		},
 		{
 			Name: "Duplicated EdgeStack Name",
-			Payload: swarmStackFromFileContentPayload{
+			Payload: edgeStackCreateTextPayload{
 				Name:             edgeStack.Name,
 				StackFileContent: "content",
 				EdgeGroups:       edgeStack.EdgeGroups,
@@ -356,7 +356,7 @@ func TestCreateWithInvalidPayload(t *testing.T) {
 		},
 		{
 			Name: "Empty EdgeStack Groups",
-			Payload: swarmStackFromFileContentPayload{
+			Payload: edgeStackCreateTextPayload{
 				Name:             edgeStack.Name,
 				StackFileContent: "content",
 				EdgeGroups:       []portainer.EdgeGroupID{},
@@ -367,7 +367,7 @@ func TestCreateWithInvalidPayload(t *testing.T) {
 		},
 		{
 			Name: "EdgeStackDeploymentKubernetes with Docker endpoint",
-			Payload: swarmStackFromFileContentPayload{
+			Payload: edgeStackCreateTextPayload{
 				Name:             "Stack name",
 				StackFileContent: "content",
 				EdgeGroups:       []portainer.EdgeGroupID{1},
@@ -378,7 +378,7 @@ func TestCreateWithInvalidPayload(t *testing.T) {
 		},
 		{
 			Name: "Empty Stack File Content",
-			Payload: swarmStackFromFileContentPayload{
+			Payload: edgeStackCreateTextPayload{
 				Name:             "Stack name",
 				StackFileContent: "",
 				EdgeGroups:       []portainer.EdgeGroupID{1},

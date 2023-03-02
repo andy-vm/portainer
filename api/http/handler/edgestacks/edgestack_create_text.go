@@ -12,7 +12,7 @@ import (
 	httperrors "github.com/portainer/portainer/api/http/errors"
 )
 
-type swarmStackFromFileContentPayload struct {
+type edgeStackCreateTextPayload struct {
 	// Name of the stack
 	Name string `example:"myStack" validate:"required"`
 	// Content of the Stack file
@@ -31,7 +31,7 @@ type swarmStackFromFileContentPayload struct {
 	UseManifestNamespaces bool
 }
 
-func (payload *swarmStackFromFileContentPayload) Validate(r *http.Request) error {
+func (payload *edgeStackCreateTextPayload) Validate(r *http.Request) error {
 	if govalidator.IsNull(payload.Name) {
 		return httperrors.NewInvalidPayloadError("Invalid stack name")
 	}
@@ -45,7 +45,7 @@ func (payload *swarmStackFromFileContentPayload) Validate(r *http.Request) error
 }
 
 func (handler *Handler) createSwarmStackFromFileContent(r *http.Request, dryrun bool) (*portainer.EdgeStack, error) {
-	var payload swarmStackFromFileContentPayload
+	var payload edgeStackCreateTextPayload
 	err := request.DecodeAndValidateJSONPayload(r, &payload)
 	if err != nil {
 		return nil, err

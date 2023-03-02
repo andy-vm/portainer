@@ -9,7 +9,7 @@ import (
 	httperrors "github.com/portainer/portainer/api/http/errors"
 )
 
-type swarmStackFromFileUploadPayload struct {
+type edgeStackCreateFilePayload struct {
 	Name             string
 	StackFileContent []byte
 	EdgeGroups       []portainer.EdgeGroupID
@@ -24,7 +24,7 @@ type swarmStackFromFileUploadPayload struct {
 	UseManifestNamespaces bool
 }
 
-func (payload *swarmStackFromFileUploadPayload) Validate(r *http.Request) error {
+func (payload *edgeStackCreateFilePayload) Validate(r *http.Request) error {
 	name, err := request.RetrieveMultiPartFormValue(r, "Name", false)
 	if err != nil {
 		return httperrors.NewInvalidPayloadError("Invalid stack name")
@@ -64,7 +64,7 @@ func (payload *swarmStackFromFileUploadPayload) Validate(r *http.Request) error 
 }
 
 func (handler *Handler) createSwarmStackFromFileUpload(r *http.Request, dryrun bool) (*portainer.EdgeStack, error) {
-	payload := &swarmStackFromFileUploadPayload{}
+	payload := &edgeStackCreateFilePayload{}
 	err := payload.Validate(r)
 	if err != nil {
 		return nil, err
