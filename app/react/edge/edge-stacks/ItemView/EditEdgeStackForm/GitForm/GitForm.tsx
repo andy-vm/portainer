@@ -23,7 +23,7 @@ import { DeploymentType, EdgeStack } from '@/react/edge/edge-stacks/types';
 import { EdgeGroupsSelector } from '@/react/edge/edge-stacks/components/EdgeGroupsSelector';
 import { EdgeStackDeploymentTypeSelector } from '@/react/edge/edge-stacks/components/EdgeStackDeploymentTypeSelector';
 import { useUser } from '@/react/hooks/useUser';
-import { useCreateGitCredentialMutation } from '@/portainer/views/account/git-credential/gitCredential.service';
+import { useCreateGitCredentialMutation } from '@/react/portainer/account/git-credentials/git-credentials.service';
 import { notifyError, notifySuccess } from '@/portainer/services/notifications';
 import { EnvironmentType } from '@/react/portainer/environments/types';
 
