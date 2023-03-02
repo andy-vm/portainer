@@ -326,19 +326,19 @@ func TestCreateWithInvalidPayload(t *testing.T) {
 			ExpectedStatusCode: 500,
 		},
 		{
-			Name:               "Empty swarmStackFromFileContentPayload with string method",
+			Name:               "Empty edgeStackCreateTextPayload with string method",
 			Payload:            edgeStackCreateTextPayload{},
 			QueryString:        "method=string",
 			ExpectedStatusCode: 400,
 		},
 		{
-			Name:               "Empty swarmStackFromFileContentPayload with repository method",
+			Name:               "Empty edgeStackCreateTextPayload with repository method",
 			Payload:            edgeStackCreateTextPayload{},
 			QueryString:        "method=repository",
 			ExpectedStatusCode: 400,
 		},
 		{
-			Name:               "Empty swarmStackFromFileContentPayload with file method",
+			Name:               "Empty edgeStackCreateTextPayload with file method",
 			Payload:            edgeStackCreateTextPayload{},
 			QueryString:        "method=file",
 			ExpectedStatusCode: 400,

@@ -20,9 +20,9 @@ import (
 // @security jwt
 // @produce json
 // @param method query string true "Creation Method" Enums(file,string,repository)
-// @param body_string body swarmStackFromFileContentPayload true "Required when using method=string"
-// @param body_file body swarmStackFromFileUploadPayload true "Required when using method=file"
-// @param body_repository body swarmStackFromGitRepositoryPayload true "Required when using method=repository"
+// @param body_string body edgeStackCreateTextPayload true "Required when using method=string"
+// @param body_file body edgeStackCreateFilePayload true "Required when using method=file"
+// @param body_repository body edgeStackCreateGitRepositoryPayload true "Required when using method=repository"
 // @success 200 {object} portainer.EdgeStack
 // @failure 500
 // @failure 503 "Edge compute features are disabled"
